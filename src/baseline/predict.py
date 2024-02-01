@@ -10,10 +10,10 @@ cap = cv2.VideoCapture("../../data/test-video.mp4")
 
 model = YOLO("../Yolo-Weights/yolov8n.pt")
 
-width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-enter_line, exit_line = scale_cross_lines("../../data/detections.json", (width, height))
+enter_line, exit_line = scale_cross_lines("../../data/detections.json", width, height)
 
 while True:
     success, img = cap.read()
