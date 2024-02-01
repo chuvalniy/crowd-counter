@@ -4,13 +4,23 @@ import cv2
 import cvzone
 from ultralytics import YOLO
 
+from src.utils import scale_cross_lines
+
 cap = cv2.VideoCapture("../../data/test-video.mp4")
 
 model = YOLO("../Yolo-Weights/yolov8n.pt")
 
+width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+
+enter_line, exit_line = scale_cross_lines("../../data/detections.json", (width, height))
+
 while True:
     success, img = cap.read()
     results = model(img, stream=True)
+
+    cv2.line(img, (enter_line[0], enter_line[1]), (enter_line[2], enter_line[3]), color=(255, 0, 0), thickness=5)
+    cv2.line(img, (exit_line[0], exit_line[1]), (exit_line[2], exit_line[3]), color=(128, 128, 0), thickness=5)
 
     for r in results:
         for box in r.boxes:
