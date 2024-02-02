@@ -1,5 +1,0 @@
-outs:
-- md5: 9ae2a4ad012abb6244d19f36c6f21713
-  size: 8488131
-  hash: md5
-  path: detections.json

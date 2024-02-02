@@ -1,2 +1,0 @@
-['remote "myremote"']
-    gdrive_user_credentials_file = ../mlops-412705-b95aaf87eb2a.json
