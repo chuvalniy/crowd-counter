@@ -3,4 +3,5 @@ ultralytics~=8.1.8
 cvzone~=1.6.1
 numpy~=1.26.3
 matplotlib~=3.8.2
+filterpy==1.4.5
 scikit-image~=0.22.0
