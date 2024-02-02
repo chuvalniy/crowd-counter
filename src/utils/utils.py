@@ -16,7 +16,8 @@ def scale_cross_lines(file_name: str, width: int, height: int) -> (list[int], li
     with open(file_name, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    cross_lines = _find_cross_lines_data(data)
+    # Cross-lines in the original json file represented as a single-element list so take a first element.
+    cross_lines = find_data_in_dictionary(data, 'cross_lines')[0]
     # Height & width scaling.
     cross_line_width, cross_line_height = cross_lines['box']
 
@@ -39,22 +40,25 @@ def scale_cross_lines(file_name: str, width: int, height: int) -> (list[int], li
     return int_line, ext_line
 
 
-def _find_cross_lines_data(data: dict) -> Optional[dict]:
+def find_data_in_dictionary(data: dict, key: str) -> Optional[dict]:
     """
     Recursively iterate over dict and find cross-lines data.
-    :return: Dictionary with information about cross-lines.
+    :return:
+    :param data: Dictionary with data.
+    :param key: Key to find required data.
+    :return: Dictionary with data by key.
     """
     if not isinstance(data, dict):
         return None
 
-    cross_lines = None
-    for key, value in data.items():
-        if key == 'cross_lines':
-            return data[key][0]  # Cross-lines in the original json file represented as a single-element list.
+    required_data = None
+    for k, v in data.items():
+        if k == key:
+            return data[k]
 
-        if isinstance(value, dict):
-            result = _find_cross_lines_data(data[key])
+        if isinstance(v, dict):
+            result = find_data_in_dictionary(data[k], key)
             if result is not None:
-                cross_lines = result
+                required_data = result
 
-    return cross_lines
+    return required_data
