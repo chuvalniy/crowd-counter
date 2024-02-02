@@ -10,10 +10,6 @@
 
 ```sh
 git clone https://github.com/chuvalniy/crowd-counter
-```
-
-Для работы с использованием openCV и YOLO необходимо установить дополнительные библиотеки.
-```sh
 pip install -r requirements.txt
 ```
 
