@@ -1,6 +1,8 @@
 import json
 from typing import Optional
 
+import numpy as np
+
 
 def scale_cross_lines(file_name: str, width: int, height: int) -> (list[int], list[int]):
     """
@@ -62,3 +64,37 @@ def find_data_in_dictionary(data: dict, key: str) -> Optional[dict]:
                 required_data = result
 
     return required_data
+
+
+def calculate_center_points(x1: int, y1: int, x2: int, y2: int):
+    """
+    Given coordinates calculate the center of the line.
+    :param x1: Start x.
+    :param y1: Start y.
+    :param x2: End x.
+    :param y2: End y.
+    :return: Center of x, Center of y
+    """
+    w = x2 - x1
+    h = y2 - y1
+
+    cx = x1 + w / 2
+    cy = y1 + h / 2
+
+    return cx, cy
+
+
+def find_distance(x1: int, x2: int, y1: int, y2: int):
+    """
+    Calculate distance between two points using distance formula.
+    :param x1: Point 1 x coordinate.
+    :param x2: Point 2 x coordinate.
+    :param y1: Point 1 y coordinate.
+    :param y2: Point 2 y coordinate.
+    :return: Distance between two points.
+    """
+    d = np.sqrt(
+        (x2 - x1) ** 2 + (y2 - y1) ** 2
+    )
+
+    return d
