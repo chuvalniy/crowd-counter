@@ -5,34 +5,27 @@
 
 </div>
 
-# People counting.
-Тестовое задание по определению количества входов и выходов в магазине.
+# People counting
+Count entered / exit number of people in the store.
 
-## Краткое описание
-Код под подсчету входов и выходов разделяется на две части:
-- Подсчет на основе видеофайла с использованием openCV2 и YOLOv8 + SORT
-- Подсчет на основе JSON файла, в котором находится информация по ID и траекториям движения посетителя
+## Short description
+In the directory there are two files for the counting enters and exits.
 
-## Установка
+### Video from camera
+I used YOLO along with SORT. Counting was done by crossing either the entry line or the exit line by visitors. 
+A person's left bounding box must cross both boundaries for the counter to increase. The specific scenario for increasing enters/exits depends on the order in which the person crossed the lines.
+
+### JSON file
+The JSON file contains the history of the visitor’s movements with the tracking_id he already has. This algorithm differs from the previous one in that it does not count how many times the border has been crossed, but looks at the distance between the two lines relative to the visitor. If previously the visitor was close to the exit line, and in the next frame to the entry line, it means that he entered the store.
+
+## Installation
 
 ```sh
 git clone https://github.com/chuvalniy/crowd-counter
 pip install -r requirements.txt
 ```
 
-## Как использовать
-Для подсчета на основе видео запустить файл **src/predict/yolo.py**
+## How to use
+For the YOLO algorithm run **src/predict/yolo.py**
 
-Для подсчета на основе JSON запустить файл **src/predict/count.py**
-
-## Результат выполнения алгоритма (JSON):
- - Количество входов: 7
- - Количество выходов: 7
- - Всего посетителей (за отрезок времени): 39 (?)
-
-## Варианты улучшения алгоритмов
-
-- Использовать маску для видео, чтобы модель не определяла объекты, которые не нужны для предсказания.
-- Удалять информацию по id посетителей (словарь входы/выходы) по истечению N количества кадров.
-- Попробовать использовать прямоугольную зону для обозначения входа/выхода вместо границ в виде линий.
-- Перенести данные (видео, JSON) на облачное хранилище, чтобы не хранить их в git репозитории.
+For the JSON file with distance calculation run **src/predict/count.py**
